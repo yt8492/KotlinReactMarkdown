@@ -18,10 +18,11 @@ dependencies {
     implementation("org.jetbrains:kotlin-styled:5.2.0-pre.130-kotlin-1.4.21")
     implementation(npm("react-markdown", "5.0.3"))
     implementation(npm("remark-gfm", "1.0.0"))
+    implementation(npm("react-syntax-highlighter", "15.4.3"))
 }
 
 kotlin {
-    js {
+    js(IR) {
         browser {
             webpackTask {
                 cssSupport.enabled = true

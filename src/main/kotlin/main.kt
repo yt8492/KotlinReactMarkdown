@@ -3,26 +3,37 @@ import kotlinx.css.*
 import kotlinx.css.properties.LineHeight
 import kotlinx.css.properties.border
 import kotlinx.css.properties.borderTop
+import react.RProps
+import react.child
 import react.dom.render
+import react.functionalComponent
+import reactsyntaxhighlighter.Prism
+import reactsyntaxhighlighter.darcula
 import styled.css
 import styled.styledDiv
+
+external interface PrismRenderProps : RProps {
+    var language: String
+    var value: String
+}
+
+val prismRender = functionalComponent<PrismRenderProps> { props ->
+    child(::Prism) {
+        + props.value
+        attrs.language = props.language
+        attrs.style = darcula
+    }
+}
 
 fun main() {
     render(document.getElementById("root")) {
         val markdown = """
-            # hoge
-            - foo
-            - bar
-            - baz
             
-            |hoge|fuga|
-            |-|-|
-            |foo|bar|
-            |bar|baz|
+            ```kotlin
+            fun main() {
+                println("hoge")
+            }
             
-            ~~hogefuga~~
-            
-            **foo**
         """.trimIndent()
         styledDiv {
             reactMarkdown(markdown, plugins = listOf(gfm), allowDangerousHtml = true)
